@@ -1,110 +1,9 @@
-# 简介
+<script setup lang="ts">
+import { markRaw, reactive, useTemplateRef } from 'vue'
+import { Lock, Search } from '@element-plus/icons-vue'
 
-基于 element plus 的二次封装，使用 JSON 来配置表单，主打一个简便。
+import { ZeForm, ZeFormItem, ZeFormV } from '../lib'
 
-# 快速上手
-
-```html
-<ZeFormV :form="form" :items="items" @finish="handleFinish" />
-```
-
-```ts
-const form = reactive<ZeForm>({
-  labelWidth: '120px',
-  model: {
-    text: '',
-    password: ''
-  },
-  rules: {
-    text: [{ required: true, message: 'input 必填哦' }]
-  }
-})
-
-const items = reactive<ZeFormItem[]>([
-  { type: 'text', name: 'text', label: '用户名' },
-  { type: 'password', name: 'password', label: '密码' },
-  { type: 'submit', name: '提交' }
-])
-
-const handleFinish = () => {
-  console.log(form.model)
-}
-
-const handleReset = () => {
-  console.log('reset')
-}
-```
-
-# API
-
-## form
-
-配置表单标签 `<Form>` ，属性值同 element plus。
-
-## items
-
-```ts
-/**
- * 表单项配置
- * @param type 类型
- * @param name 既是表单 name，prop，也是按钮 innerHTML
- * @param label 标签名
- * @param item 在 el-form-item 上的属性
- * @param option 在表单控件上的属性
- * @param event 在表单控件上的事件
- * @param options 表单控件的值集合，在特殊控件中使用
- */
-export interface ZeFormItem {
-  type: ZeFormTypes
-  name: string
-  label?: string
-  item?: Partial<FormItemProps> & { style?: Partial<CSSStyleDeclaration> }
-  option?: any
-  event?: any
-  options?: any[]
-}
-```
-
-## @finish，@reset
-
-配置 `type === 'submit'` `type === 'reset'` 时使用。
-
-## ref 使用
-
-```html
-<ZeFromV ref="zeformv" />
-```
-
-```ts
-const handleClick = () => {
-  // 同原生的 ref
-  console.log(zeformv.value?.zeform)
-}
-```
-
-# 表单项总览
-
-```html
-<ZeFormV
-  ref="zeformv"
-  :form="form"
-  :items="items"
-  @finish="handleFinish"
-  @reset="handleReset"
->
-  <template #selectG-select="{ item }">
-    <span>{{ item.label }}: {{ item.value }}</span>
-  </template>
-  <template #treeSelect-treeSelect="{ item }">
-    <span>{{ item.label }}: {{ item.value }}</span>
-  </template>
-  <template #cascader-cascader="{ item }">
-    <span>{{ item.data.label }}: {{ item.data.value }}</span>
-  </template>
-</ZeFormV>
-```
-
-```ts
 const zeformv = useTemplateRef<InstanceType<typeof ZeFormV>>('zeformv')
 
 const options1 = [
@@ -133,6 +32,34 @@ const options3 = [
     ]
   }
 ]
+
+const form = reactive<ZeForm>({
+  labelWidth: '120px',
+  inline: false,
+  model: {
+    text: '',
+    password: '',
+    textarea: '',
+    number: 0,
+    radio: '1',
+    radioB: '2',
+    selectS: '1',
+    selectG: '2',
+    selectV: '1',
+    checkbox: [],
+    checkboxA: [],
+    switch: false,
+    time: [],
+    date: [],
+    treeSelect: '',
+    cascader: '',
+    color: '',
+    upload: []
+  },
+  rules: {
+    text: [{ required: true, message: 'input 必填哦' }]
+  }
+})
 
 const items = reactive<ZeFormItem[]>([
   {
@@ -228,4 +155,40 @@ const handleFinish = () => {
 const handleReset = () => {
   console.log('reset')
 }
-```
+</script>
+
+<template>
+  <div class="box">
+    <span class="title">表单项总览</span>
+    <ZeFormV
+      ref="zeformv"
+      :form="form"
+      :items="items"
+      @finish="handleFinish"
+      @reset="handleReset"
+    >
+      <template #selectG-select="{ item }">
+        <span>{{ item.label }}: {{ item.value }}</span>
+      </template>
+      <template #treeSelect-treeSelect="{ item }">
+        <span>{{ item.label }}: {{ item.value }}</span>
+      </template>
+      <template #cascader-cascader="{ item }">
+        <span>{{ item.data.label }}: {{ item.data.value }}</span>
+      </template>
+    </ZeFormV>
+  </div>
+</template>
+
+<style scoped>
+.box {
+  width: 1000px;
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+
+  .title {
+    font-weight: 800;
+  }
+}
+</style>
