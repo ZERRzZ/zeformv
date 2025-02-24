@@ -56,12 +56,12 @@ defineExpose({
         v-bind="option"
         v-on="event"
       >
-        <!-- <template v-slot:prepend>
-          <slot :name="`${name}-input-prepend`" />
+        <template v-slot:prepend>
+          <slot :name="`${name}-prepend`" />
         </template>
         <template v-slot:append>
-          <slot :name="`${name}-input-append`" />
-        </template> -->
+          <slot :name="`${name}-append`" />
+        </template>
       </el-input>
       <el-input-number
         v-else-if="type === 'number'"
@@ -95,9 +95,9 @@ defineExpose({
         v-bind="option"
         v-on="event"
       >
-        <!-- <template #header>
-          <slot :name="`${name}=header`"></slot>
-        </template> -->
+        <template #header>
+          <slot :name="`${name}-header`"></slot>
+        </template>
         <template v-for="{ label, value, ...o } in options">
           <el-option-group v-if="o.options" :key="label" :label="label">
             <el-option
@@ -120,9 +120,9 @@ defineExpose({
             <slot :name="`${name}-select`" :item="{ label, value, ...o }" />
           </el-option>
         </template>
-        <!-- <template #footer>
-          <slot :name="`${name}=footer`"></slot>
-        </template> -->
+        <template #footer>
+          <slot :name="`${name}-footer`"></slot>
+        </template>
       </component>
       <el-checkbox-group
         v-else-if="type === 'checkbox'"
@@ -194,7 +194,7 @@ defineExpose({
         <template #default="{ node, data }">
           <slot :name="`${name}-cascader`" :item="{ node, data }">
             <span>{{ data.label }}</span>
-            <!-- <span v-if="!node.isLeaf">({{ data.children.length }})</span> -->
+            <span v-if="!node.isLeaf">({{ data.children.length }})</span>
           </slot>
         </template>
       </el-cascader>
@@ -262,5 +262,15 @@ defineExpose({
 
 .layout > .el-form-item {
   width: 100%;
+}
+</style>
+
+<style>
+/* 无内容的不显示 */
+.el-input-group__append:empty,
+.el-input-group__prepend:empty,
+.el-select-dropdown__header:empty,
+.el-select-dropdown__footer:empty {
+  display: none;
 }
 </style>

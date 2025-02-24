@@ -173,9 +173,9 @@ const handleReset = () => {
       <template #treeSelect-treeSelect="{ item }">
         <span>{{ item.label }}: {{ item.value }}</span>
       </template>
-      <template #cascader-cascader="{ item }">
+      <!-- <template #cascader-cascader="{ item }">
         <span>{{ item.data.label }}: {{ item.data.value }}</span>
-      </template>
+      </template> -->
     </ZeFormV>
   </div>
 </template>
