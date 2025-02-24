@@ -167,12 +167,15 @@ const handleReset = () => {
       @finish="handleFinish"
       @reset="handleReset"
     >
+      <template #text-prepend>
+        <el-button>prepend</el-button>
+      </template>
       <template #selectG-select="{ item }">
         <span>{{ item.label }}: {{ item.value }}</span>
       </template>
-      <template #treeSelect-treeSelect="{ item }">
+      <!-- <template #treeSelect-treeSelect="{ item }">
         <span>{{ item.label }}: {{ item.value }}</span>
-      </template>
+      </template> -->
       <!-- <template #cascader-cascader="{ item }">
         <span>{{ item.data.label }}: {{ item.data.value }}</span>
       </template> -->

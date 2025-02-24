@@ -82,6 +82,28 @@ const handleClick = () => {
 }
 ```
 
+## 使用 slot 实现自定义 input 框 prepend
+
+```html
+<ZeFormV>
+  <template #text-prepend>
+    <el-button>prepend</el-button>
+  </template>
+</ZeFormV>
+```
+
+以上的插槽命名规则是表单项 `name` 加上插槽的作用位置名称。
+
+其他的还有 `-append` `-header` `-footer`，在 `Element Plus` 中有用到插槽的地方这里都能这么用。
+
+另一中是带有数据的插槽，像 `-select` `-treeSelect` `-cascader`，一般用于自定义列表项。
+
+```html
+<template #selectG-select="{ item }">
+  <span>{{ item.label }}: {{ item.value }}</span>
+</template>
+```
+
 # 表单项总览
 
 ```html
